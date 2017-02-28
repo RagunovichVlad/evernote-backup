@@ -10,14 +10,14 @@ module EvernoteBackup
 
       def notes
         note_list.map do |note|
-          note_store.getNote(dev_token, note.guid, true, true, true, true)
+          note_store.getNote(token, note.guid, true, true, true, true)
         end
       end
 
       private
 
       def client
-        @client ||= ::EvernoteOAuth::Client.new(token: dev_token, sandbox: false)
+        @client ||= ::EvernoteOAuth::Client.new(token: token, sandbox: true)
       end
 
       def note_store
@@ -25,11 +25,11 @@ module EvernoteBackup
       end
 
       def notebook_list
-        note_store.listNotebooks(dev_token)
+        note_store.listNotebooks(token)
       end
 
       def note_list
-        note_store.findNotes(dev_token, filter, 0, notes_count).notes
+        note_store.findNotes(token, filter, 0, notes_count).notes
       end
 
       def filter
@@ -37,7 +37,7 @@ module EvernoteBackup
       end
 
       def notes_count
-        note_store.findNotes(dev_token, filter, 0, nil).totalNotes
+        note_store.findNotes(token, filter, 0, nil).totalNotes
       end
 
       def token

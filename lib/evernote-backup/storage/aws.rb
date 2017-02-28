@@ -2,25 +2,20 @@ module EvernoteBackup
   module Storage
     class Aws
 
-      ACCESS_KEY_ID =  'AKIAIVF2NOL6ZQPTRLIQ'
-      SECRET_ACCESS_KEY = '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'
-
-      def upload_file(name, content)
-        client.bucket('rag-evernote').object(file_name(name)).put(body: content)
+      def upload(name:, content:)
+        client.bucket(bucket_name).object(name).put(body: content)
       end
 
-      def file_name(name)
-        "#{notebook_stack}/#{name}"
-      end
+      private
 
-      def notebook_stack
-        'evernote-gem'
+      def bucket_name
+        EvernoteBackup.bucket_name
       end
 
       def client
         @client ||= ::Aws::S3::Resource.new(
           credentials: credentials,
-          region: 'us-west-2'
+          region: EvernoteBackup.aws_region
         )
       end
 
