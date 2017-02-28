@@ -17,7 +17,7 @@ module EvernoteBackup
       private
 
       def client
-        @client ||= ::EvernoteOAuth::Client.new(token: token, sandbox: true)
+        @client ||= ::EvernoteOAuth::Client.new(token: token, sandbox: false)
       end
 
       def note_store
