@@ -28,12 +28,12 @@ First of all, setup configuration:
 
 ```ruby
 EvernoteBackup.configuration do |config|
+  config.storage = :aws
   config.aws_access_key_id = 'aws_access_key_id'
   config.aws_secret_access_key = 'aws_secret_access_key'
-  config.evernote_token = 'evernote_token'
-  config.storage = :aws
   config.aws_region = 'us-west-2'
   config.bucket_name = 'bucket_name'
+  config.evernote_token = 'evernote_token'
   config.notebook_stack = 'notebook_stack'
 end
 ```
