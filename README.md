@@ -1,8 +1,10 @@
-# Evernote::Backup
+# EvernoteBackup
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/evernote/backup`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ruby gem that can take all of the nodes from an Evernote account and backup them to S3 bucket in tree-like structure like this:
 
-TODO: Delete this and the text above, and describe your gem
+```
+ bucket_name\:notebook_stack\:notebook\:note_name\(note_text|note_attachments)
+```
 
 ## Installation
 
@@ -22,17 +24,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First of all, setup configuration:
 
-## Development
+```ruby
+EvernoteBackup.configuration do |config|
+  config.aws_access_key_id = 'aws_access_key_id'
+  config.aws_secret_access_key = 'aws_secret_access_key'
+  config.evernote_token = 'evernote_token'
+  config.storage = :aws
+  config.aws_region = 'us-west-2'
+  config.bucket_name = 'bucket_name'
+  config.notebook_stack = 'notebook_stack'
+end
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+To create the Evernote API developer token go to
+[Developer Tokens](https://dev.evernote.com/doc/articles/dev_tokens.php)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+And then export data:
+
+```ruby
+EvernoteBackup::Exporter.new.export
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/evernote-backup. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/RagunovichVlad/evernote-backup. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
