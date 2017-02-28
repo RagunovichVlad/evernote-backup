@@ -25,11 +25,11 @@ module EvernoteBackup
       end
 
       def notebook_list
-        note_store.listNotebooks(token)
+        @notebook_list ||= note_store.listNotebooks(token)
       end
 
       def note_list
-        note_store.findNotes(token, filter, 0, notes_count).notes
+        @note_list ||= note_store.findNotes(token, filter, 0, notes_count).notes
       end
 
       def filter
